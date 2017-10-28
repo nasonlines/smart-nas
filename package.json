@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "start": "index.js",
-    "test": "mocha"
+    "test": "mocha --timeout 100000"
   },
   "repository": {
     "type": "git",

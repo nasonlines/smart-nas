@@ -47,11 +47,10 @@ describe('Start SmartNas with plugins', function() {
   });
 
 });
-
 describe('Upgrading databases', function() {
   var dbPath;
   it('upgrade database perfectly', function() {
-    var databasePath = './test/db/sqlite_'+new Date().getTime()+'.db';;
+    var databasePath = './test/db/sqlite_'+new Date().getTime()+'.db';
     dbPath = databasePath;
     generateDefaultDatabase(databasePath);
     let smartNas = new SmartNas("SqliteDriver", dbPath);
@@ -60,7 +59,7 @@ describe('Upgrading databases', function() {
     let smartNas = new SmartNas("SqliteDriver", dbPath);
   });
   it('database not compatible', function() {
-    var databasePath = './test/db/sqlite_'+new Date().getTime()+'.db';;
+    var databasePath = './test/db/sqlite_'+new Date().getTime()+'.db';
     generateFakeDatabase(databasePath);
     (function () {
       let smartNas = new SmartNas("SqliteDriver", databasePath);
@@ -68,3 +67,29 @@ describe('Upgrading databases', function() {
   });
 
 });
+describe('Gettings rules from server', function(){
+  it('Get rules from server in json', function(done) {
+    var databasePath = './test/db/sqlite_'+new Date().getTime()+'.db';
+    generateDefaultDatabase(databasePath);
+    let smartNas = new SmartNas("SqliteDriver", databasePath);
+    smartNas.loadRulesFromURI();
+    smartNas.on('smartResponse', function(data){
+      data.should.not.equal('Cannot get clean response from server');
+      data.should.not.equal('Cannot get clean json');
+      data.should.not.equal('Unknown error');
+      done();
+    })
+  });
+})
+describe('Get values from Algorithm', function(){
+    it('Try a files', function(done) {
+      var databasePath = './test/db/sqlite_'+new Date().getTime()+'.db';
+      generateDefaultDatabase(databasePath);
+      let smartNas = new SmartNas("SqliteDriver", databasePath);
+      smartNas.loadRulesFromURI();
+      smartNas.on('smartResponse', function(data){
+        smartNas.level(databasePath);
+        done();
+      })
+    });
+})
