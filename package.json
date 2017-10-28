@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "start": "index.js",
-    "test": "node tests/index.js"
+    "test": "mocha"
   },
   "repository": {
     "type": "git",
@@ -23,5 +23,12 @@
     "url": "https://github.com/nasonlines/smart-nas/issues"
   },
   "homepage": "https://github.com/nasonlines/smart-nas#readme",
-  "devDependencies": {}
+  "devDependencies": {
+    "mocha": "^4.0.1"
+  },
+  "dependencies": {
+    "better-sqlite3": "^4.0.3",
+    "chai": "^4.1.2",
+    "tracer": "^0.8.11"
+  }
 }
