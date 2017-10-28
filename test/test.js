@@ -16,7 +16,7 @@ function generateDefaultDatabase(path){
 
 /* SMART-NAS TESTS */
 describe('Start SmartNas with plugins', function() {
-  var databasePath = './test/db/sqlite_'+new Date().getTime();
+  var databasePath = './test/db/sqlite_'+new Date().getTime()+'.db';
   generateDefaultDatabase(databasePath)
 
   describe('# Should pass', function() {
@@ -51,7 +51,7 @@ describe('Start SmartNas with plugins', function() {
 describe('Upgrading databases', function() {
   var dbPath;
   it('upgrade database perfectly', function() {
-    var databasePath = './test/db/sqlite_'+new Date().getTime();
+    var databasePath = './test/db/sqlite_'+new Date().getTime()+'.db';;
     dbPath = databasePath;
     generateDefaultDatabase(databasePath);
     let smartNas = new SmartNas("SqliteDriver", dbPath);
@@ -60,7 +60,7 @@ describe('Upgrading databases', function() {
     let smartNas = new SmartNas("SqliteDriver", dbPath);
   });
   it('database not compatible', function() {
-    var databasePath = './test/db/sqlite_'+new Date().getTime();
+    var databasePath = './test/db/sqlite_'+new Date().getTime()+'.db';;
     generateFakeDatabase(databasePath);
     (function () {
       let smartNas = new SmartNas("SqliteDriver", databasePath);
