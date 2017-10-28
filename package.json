@@ -1,0 +1,27 @@
+{
+  "name": "smart-nas",
+  "version": "0.0.1",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "start": "index.js",
+    "test": "node tests/index.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/nasonlines/smart-nas.git"
+  },
+  "keywords": [
+    "smart",
+    "algorithm",
+    "files",
+    "detection"
+  ],
+  "author": "NasOnlines SASU",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/nasonlines/smart-nas/issues"
+  },
+  "homepage": "https://github.com/nasonlines/smart-nas#readme",
+  "devDependencies": {},
+}
