@@ -17,7 +17,7 @@ function generateDefaultDatabase(path){
 function insertFakersFiles(path){
   let db = new Database(path);
   var faker = require('faker');
-  for (var i = 0; i < 100; i++){
+  for (var i = 0; i < 1000; i++){
     var Base64 = require('js-base64').Base64;
     var data = {
       path  : Base64.encode("c:/"+faker.random.number()+"/"+faker.system.commonFileName()),

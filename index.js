@@ -12,6 +12,8 @@ class SmartNas {
       this.loadPlugins(plugin, args)
       this.uriRules = _URI_RULES_;
       this.rules = {}
+      this.module_loaded = false
+
     }
 
     level(path) {
@@ -92,20 +94,24 @@ class SmartNas {
         if (error != null || (response && response.statusCode) != 200 ){
           logger.debug("Cannot get clean response from server")
           self.emit('smartResponse', "Cannot get clean response from server")
+          self.module_loaded = false
         } else {
           try {
             let json = JSON.parse(body)
             self.rules = json
             logger.debug("Get rules cleanly")
-            self.emit('smartResponse', json)
+            self.emit('smartResponse', "Module SmartNas OK")
+            self.module_loaded = true
           } catch (e) {
             logger.debug("Cannot get clean json")
             self.emit('smartResponse', "Cannot get clean json")
+            self.module_loaded = false
           }
         }
       }).on('error', function(err) {
         logger.debug("Unknown error")
         self.emit('smartResponse', "Unknown error")
+        self.module_loaded = false
       });
     }
     loadPlugins(name, args) {
