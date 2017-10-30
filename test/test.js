@@ -14,6 +14,30 @@ function generateDefaultDatabase(path){
   db.exec(create)
 }
 
+function insertFakersFiles(path){
+  let db = new Database(path);
+  var faker = require('faker');
+  for (var i = 0; i < 100; i++){
+    var Base64 = require('js-base64').Base64;
+    var data = {
+      path  : Base64.encode("c:/"+faker.random.number()+"/"+faker.system.commonFileName()),
+      sent  : faker.random.boolean(),
+      mtime  : faker.date.past(),
+      priority  : 0,
+      size:faker.random.number(),
+      SN_ext_level:Math.floor(Math.random() * 6) + 1 ,
+      SN_rs_level:Math.floor(Math.random() * 6) + 1 ,
+      SN_atime_level:Math.floor(Math.random() * 6) + 1,
+      SN_atime_last: faker.date.past(),
+      SN_atime_count:faker.random.number(),
+      SN_a_sent: faker.random.boolean(),
+      SN_is_live: faker.random.boolean()
+    }
+    let insert = "INSERT INTO files (path, sent, mtime, priority, size, SN_ext_level, SN_rs_level,SN_atime_level,SN_atime_last, SN_atime_count,SN_a_sent,SN_is_live) VALUES ('"+data.path+"','"+data.sent+"','"+data.mtime+"','"+data.priority+"','"+data.size+"','"+data.SN_ext_level+"','"+data.SN_rs_level+"','"+data.SN_atime_level+"','"+data.SN_atime_last+"','"+data.SN_atime_count+"','"+data.SN_a_sent+"','"+data.SN_is_live+"');";
+    db.exec(insert)
+  }
+}
+
 /* SMART-NAS TESTS */
 describe('Start SmartNas with plugins', function() {
   var databasePath = './test/db/sqlite_'+new Date().getTime()+'.db';
@@ -82,13 +106,16 @@ describe('Gettings rules from server', function(){
   });
 })
 describe('Get values from Algorithm', function(){
+  this.timeout(15000000);
     it('Try a files', function(done) {
       var databasePath = './test/db/sqlite_'+new Date().getTime()+'.db';
       generateDefaultDatabase(databasePath);
       let smartNas = new SmartNas("SqliteDriver", databasePath);
+      insertFakersFiles(databasePath);
       smartNas.loadRulesFromURI();
       smartNas.on('smartResponse', function(data){
         smartNas.level(databasePath);
+        smartNas.algorithm(0, 142)[0].path
         done();
       })
     });

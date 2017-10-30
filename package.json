@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "start": "index.js",
-    "test": "mocha --timeout 100000"
+    "test": "mocha --timeout 1000000"
   },
   "repository": {
     "type": "git",
@@ -29,6 +29,8 @@
   "dependencies": {
     "better-sqlite3": "^4.0.3",
     "chai": "^4.1.2",
+    "faker": "^4.1.0",
+    "js-base64": "^2.3.2",
     "node-gyp-install": "^2.2.0",
     "request": "^2.83.0",
     "sqlite3": "^3.1.13",

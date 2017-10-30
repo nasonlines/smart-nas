@@ -22,7 +22,8 @@ class SmartNas {
       var ret = {
         SN_ext_level:null,
         SN_rs_level:null,
-        SN_atime_level:null
+        SN_atime_level:null,
+        SN_atime_count:null
       }
 
       // Range_size find level
@@ -71,10 +72,18 @@ class SmartNas {
         ret.SN_ext_level = this.rules.rules.range_atime.content[find].level
       }
 
+      // SN_atime_count find
+      var Base64 = require('js-base64').Base64;
+      let dataFromDriver = this.driver.getInfoFile(Base64.encode(path));
+      if (dataFromDriver != undefined) {
+        ret.SN_atime_count = dataFromDriver.SN_atime_count;
+      } else {
+        ret.SN_atime_count = 0;
+      }
+
       return (ret)
 
     }
-
     loadRulesFromURI() {
       var request = require('request');
       var self = this;
@@ -99,7 +108,6 @@ class SmartNas {
         self.emit('smartResponse', "Unknown error")
       });
     }
-
     loadPlugins(name, args) {
       if (fs.existsSync('./plugins/'+name+'.js')) {
         var  Driver = require('./plugins/SqliteDriver.js')
@@ -109,6 +117,11 @@ class SmartNas {
         throw "Plugin expected not found"
       }
     }
+
+    algorithm(level = 0, limit = 100){
+      return (this.driver.lookingFor(level, limit))
+    }
+
 }
 
 SmartNas.prototype.__proto__ = events.EventEmitter.prototype;
