@@ -114,8 +114,8 @@ class SmartNas {
       });
     }
     loadPlugins(name, args) {
-      if (fs.existsSync('./plugins/'+name+'.js')) {
-        var  Driver = require('./plugins/SqliteDriver.js')
+      if (fs.existsSync('plugins/'+name+'.js')) {
+        var  Driver = require('plugins/SqliteDriver.js')
         this.driver = new Driver(args);
       } else {
         logger.error('Plugin expected not found');
