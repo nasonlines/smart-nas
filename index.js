@@ -16,9 +16,8 @@ class SmartNas {
 
     }
 
-    level(path) {
+    level(path, stats) {
       var fs = require('fs')
-      var stats = fs.statSync(path)
       var pModule = require('path')
 
       var ret = {

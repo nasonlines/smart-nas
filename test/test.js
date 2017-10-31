@@ -1,6 +1,7 @@
 var should = require('chai').should();
 var SmartNas = require('../index.js')
 var Database = require('better-sqlite3');
+var fs = require('fs');
 
 function generateFakeDatabase(path){
   let db = new Database(path);
@@ -114,7 +115,9 @@ describe('Get values from Algorithm', function(){
       insertFakersFiles(databasePath);
       smartNas.loadRulesFromURI();
       smartNas.on('smartResponse', function(data){
-        smartNas.level(databasePath);
+        var stats = fs.statSync(databasePath)
+
+        smartNas.level(databasePath, stats);
         smartNas.algorithm(0, 142)[0].path
         done();
       })
